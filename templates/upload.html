@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload</title>
+<style>
+    body{
+        background-color: #c1ece6 !important;
+    }
+    .page-header {
+            
+        vertical-align: middle;
+        text-align: center;
+        font-family: 'Permanent Marker', cursive;
+        font-size:30px;
+        color: blue;
+        color: #fff;
+        background: linear-gradient(110deg, #e45f5f 33%, rgba(0, 0, 0, 0) 33%), linear-gradient(110deg, #4e4c4c 34%, #01b5bb 34%);
+        background-size: 400%;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+    }
+    .page-header{
+            animation: Gradient 5s ease infinite;
+            -webkit-animation: Gradient 15s ease infinite;
+            -moz-animation: Gradient 5s ease infinite;
+    }
+    
+    @-webkit-keyframes Gradient {
+        0% {
+            background-position: 30% 50%
+        }
+        50% {
+            background-position: 25% 50%
+        }
+        100% {
+            background-position: 30% 50%
+        }
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Image Uploader</h1>
+        </div>
+        <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <strong>Files:</strong><br>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file-picker" name="file" accept="image/*" multiple>
+                    <label class="custom-file-label" for="file-picker" aria-describedby="file-picker">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <input class="input-group-text" type="submit" value="Upload" id="upload-button"></input>
+                </div>
+            </div>
+            <div id="msg"></div>
+        </form>
+    </div>
+</div>
+
+</body>
+<script>
+
+    $("#file-picker").change(function(){
+        var input = document.getElementById('file-picker');
+        for (var i=0; i<input.files.length; i++)
+        {
+            var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+            if ((ext == 'jpg') || (ext == 'png') || (ext == 'tif') || (ext == 'gif'))
+            {
+                $("#msg").text("Files are supported")
+            }
+            else
+            {
+                $("#msg").text("Files are NOT supported")
+                document.getElementById("file-picker").value ="";
+            }
+        }
+    });
+
+</script>
+</html>
